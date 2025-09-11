@@ -11,7 +11,7 @@ export default function App() {
   const [query, setQuery] = useState("");
   const [filterOpenNow, setFilterOpenNow] = useState(false);
   const markersRef = useRef([]);
-  const [center, setCenter] = useState({ lat: 37.7749, lng: -122.4194 }); // default: SF
+  const [center, setCenter] = useState({ lat: 37.7749, lng: -122.4194 });
 
   // Dynamically load Google Maps script
   useEffect(() => {
@@ -35,7 +35,6 @@ export default function App() {
     return () => {
       if (script) document.head.removeChild(script);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function initMap() {
@@ -226,16 +225,6 @@ return (
             Re-center
           </button>
         </div>
-
-        {/* <label className="flex items-center gap-2 text-sm text-gray-700">
-          <input
-            type="checkbox"
-            checked={filterOpenNow}
-            onChange={(e) => setFilterOpenNow(e.target.checked)}
-            className="accent-amber-600"
-          />
-          Show only open now
-        </label> */}
       </form>
 
       {/* Results */}
