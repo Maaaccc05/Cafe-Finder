@@ -168,7 +168,7 @@ return (
         ☕ Cafe Finder
       </h2>
       <p className="text-gray-500 text-xs sm:text-sm">
-        Find cafes near you using Google Maps + Places API.
+        Find cafes near you using Google Maps
       </p>
 
       {/* Search form */}
@@ -227,7 +227,7 @@ return (
           </button>
         </div>
 
-        <label className="flex items-center gap-2 text-sm text-gray-700">
+        {/* <label className="flex items-center gap-2 text-sm text-gray-700">
           <input
             type="checkbox"
             checked={filterOpenNow}
@@ -235,7 +235,7 @@ return (
             className="accent-amber-600"
           />
           Show only open now
-        </label>
+        </label> */}
       </form>
 
       {/* Results */}
