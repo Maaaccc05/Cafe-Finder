@@ -160,137 +160,150 @@ function createMarker(place) {
     }
   }
 
-  return (
-    <div className="flex h-screen font-sans bg-gray-100">
-      {/* Sidebar */}
-      <aside className="w-96 border-r border-gray-200 bg-white p-5 shadow-md overflow-y-auto">
-        <h2 className="text-2xl font-bold text-amber-700">☕ Cafe Finder</h2>
-        <p className="text-gray-500 text-sm">
-          Find cafes near you using Google Maps + Places API.
-        </p>
+return (
+  <div className="flex flex-col lg:flex-row h-screen font-sans bg-gray-100">
+    {/* Sidebar */}
+    <aside className="w-full lg:w-96 border-b lg:border-r border-gray-200 bg-white p-5 shadow-md overflow-y-auto max-h-[50vh] lg:max-h-full">
+      <h2 className="text-xl sm:text-2xl font-bold text-amber-700">
+        ☕ Cafe Finder
+      </h2>
+      <p className="text-gray-500 text-xs sm:text-sm">
+        Find cafes near you using Google Maps + Places API.
+      </p>
 
-        <form onSubmit={handleSearchSubmit} className="mt-4 space-y-3">
-          <input
-            aria-label="Search keywords"
-            placeholder="Search (e.g., latte, bakery)"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-amber-500 outline-none"
-          />
+      {/* Search form */}
+      <form onSubmit={handleSearchSubmit} className="mt-4 space-y-3">
+        <input
+          aria-label="Search keywords"
+          placeholder="Search (e.g., latte, bakery)"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          className="w-full px-3 py-2 border rounded-lg text-sm sm:text-base focus:ring-2 focus:ring-amber-500 outline-none"
+        />
 
-          <div>
-            <label className="text-sm text-gray-600">
-              Radius: <span className="font-semibold">{radius} m</span>
-            </label>
-            <input
-              type="range"
-              min={200}
-              max={5000}
-              step={100}
-              value={radius}
-              onChange={(e) => setRadius(parseInt(e.target.value, 10))}
-              className="w-full accent-amber-600"
-            />
-          </div>
-
-          <div className="flex gap-3">
-            <button
-              type="submit"
-              className="flex-1 bg-amber-600 text-white py-2 rounded-lg hover:bg-amber-700 transition"
-            >
-              Search
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setQuery("");
-                setFilterOpenNow(false);
-                setRadius(1500);
-                if (navigator.geolocation) {
-                  navigator.geolocation.getCurrentPosition((pos) => {
-                    const p = {
-                      lat: pos.coords.latitude,
-                      lng: pos.coords.longitude,
-                    };
-                    setCenter(p);
-                    googleMapRef.current.setCenter(p);
-                    searchNearby(p);
-                  });
-                }
-              }}
-              className="flex-1 bg-gray-200 py-2 rounded-lg hover:bg-gray-300 transition"
-            >
-              Re-center
-            </button>
-          </div>
-
-          <label className="flex items-center gap-2 text-sm text-gray-700">
-            <input
-              type="checkbox"
-              checked={filterOpenNow}
-              onChange={(e) => setFilterOpenNow(e.target.checked)}
-              className="accent-amber-600"
-            />
-            Show only open now
+        <div>
+          <label className="text-sm text-gray-600">
+            Radius: <span className="font-semibold">{radius} m</span>
           </label>
-        </form>
-
-        <div className="mt-5">
-          <h3 className="font-semibold text-gray-700">Results</h3>
-          {loading && <div className="text-sm text-gray-500">Loading…</div>}
-          {!loading && cafes.length === 0 && (
-            <div className="text-sm text-gray-400 mt-2">No cafes found.</div>
-          )}
-
-          <ul className="mt-3 space-y-2">
-            {cafes.map((c) => (
-              <li
-                key={c.place_id}
-                className="p-3 bg-gray-50 rounded-lg shadow hover:bg-amber-50 cursor-pointer transition"
-                onClick={() => goToPlace(c)}
-              >
-                <div className="flex justify-between">
-                  <div>
-                    <div className="font-semibold text-gray-800">{c.name}</div>
-                    <div className="text-xs text-gray-500">
-                      {c.vicinity || c.formatted_address}
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-sm text-amber-600 font-bold">
-                      {c.rating || "—"}
-                    </div>
-                    <div className="text-xs text-gray-400">
-                      {c.user_ratings_total || 0} reviews
-                    </div>
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ul>
+          <input
+            type="range"
+            min={200}
+            max={5000}
+            step={100}
+            value={radius}
+            onChange={(e) => setRadius(parseInt(e.target.value, 10))}
+            className="w-full accent-amber-600"
+          />
         </div>
 
-        <footer style={{ marginTop: 16, fontSize: 12, color: '#999', textAlign: "center" }}>
-  <div>
-    Built with ❤️ using Google Maps + React
-  </div>
-  <div>
-    <a href="https://github.com/Maaaccc05" target="_blank" rel="noopener noreferrer" style={{ color: "#0077cc" }}>
-      GitHub
-    </a>{" | "}
-    <a href="https://www.linkedin.com/in/mayuresh-kamble-79ba97306" target="_blank" rel="noopener noreferrer" style={{ color: "#0077cc" }}>
-      LinkedIn
-    </a>
-  </div>
-</footer>
-      </aside>
+        <div className="flex flex-col sm:flex-row gap-3">
+          <button
+            type="submit"
+            className="flex-1 bg-amber-600 text-white py-2 rounded-lg hover:bg-amber-700 transition text-sm sm:text-base"
+          >
+            Search
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setQuery("");
+              setFilterOpenNow(false);
+              setRadius(1500);
+              if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition((pos) => {
+                  const p = {
+                    lat: pos.coords.latitude,
+                    lng: pos.coords.longitude,
+                  };
+                  setCenter(p);
+                  googleMapRef.current.setCenter(p);
+                  searchNearby(p);
+                });
+              }
+            }}
+            className="flex-1 bg-gray-200 py-2 rounded-lg hover:bg-gray-300 transition text-sm sm:text-base"
+          >
+            Re-center
+          </button>
+        </div>
 
-      {/* Map */}
-      <main className="flex-1 relative">
-        <div ref={mapRef} className="h-full w-full" />
-      </main>
-    </div>
-  );
+        <label className="flex items-center gap-2 text-sm text-gray-700">
+          <input
+            type="checkbox"
+            checked={filterOpenNow}
+            onChange={(e) => setFilterOpenNow(e.target.checked)}
+            className="accent-amber-600"
+          />
+          Show only open now
+        </label>
+      </form>
+
+      {/* Results */}
+      <div className="mt-5">
+        <h3 className="font-semibold text-gray-700">Results</h3>
+        {loading && <div className="text-sm text-gray-500">Loading…</div>}
+        {!loading && cafes.length === 0 && (
+          <div className="text-sm text-gray-400 mt-2">No cafes found.</div>
+        )}
+
+        <ul className="mt-3 space-y-2">
+          {cafes.map((c) => (
+            <li
+              key={c.place_id}
+              className="p-3 bg-gray-50 rounded-lg shadow hover:bg-amber-50 cursor-pointer transition"
+              onClick={() => goToPlace(c)}
+            >
+              <div className="flex justify-between">
+                <div>
+                  <div className="font-semibold text-gray-800">{c.name}</div>
+                  <div className="text-xs text-gray-500">
+                    {c.vicinity || c.formatted_address}
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="text-sm text-amber-600 font-bold">
+                    {c.rating || "—"}
+                  </div>
+                  <div className="text-xs text-gray-400">
+                    {c.user_ratings_total || 0} reviews
+                  </div>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Footer */}
+      <footer className="mt-6 text-xs text-gray-500 text-center">
+        <div>Built with ❤️ using Google Maps + React</div>
+        <div>
+          <a
+            href="https://github.com/Maaaccc05"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600"
+          >
+            GitHub
+          </a>{" "}
+          |{" "}
+          <a
+            href="https://www.linkedin.com/in/mayuresh-kamble-79ba97306"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600"
+          >
+            LinkedIn
+          </a>
+        </div>
+      </footer>
+    </aside>
+
+    {/* Map */}
+    <main className="flex-1 relative h-[50vh] lg:h-auto">
+      <div ref={mapRef} className="h-full w-full" />
+    </main>
+  </div>
+);
 }
-
  
