@@ -73,28 +73,7 @@ export default function App() {
     markersRef.current = [];
   }
 
-  // function createMarker(place) {
-  //   if (!place.geometry || !place.geometry.location) return;
-  //   const marker = new window.google.maps.Marker({
-  //     map: googleMapRef.current,
-  //     position: place.geometry.location,
-  //   });
 
-  //   marker.addListener("click", () => {
-  //     const content = `
-  //       <div style="max-width:240px">
-  //         <strong>${place.name}</strong><br/>
-  //         ${place.vicinity || place.formatted_address || ""}<br/>
-  //         Rating: ${place.rating || "N/A"} (${place.user_ratings_total || 0})<br/>
-  //         ${place.opening_hours && place.opening_hours.isOpen() ? "Open now" : ""}
-  //       </div>
-  //     `;
-  //     infoWindowRef.current.setContent(content);
-  //     infoWindowRef.current.open({ anchor: marker, map: googleMapRef.current });
-  //   });
-
-  //   markersRef.current.push(marker);
-  // }
 function createMarker(place) {
   if (!place.geometry || !place.geometry.location) return;
   const marker = new window.google.maps.Marker({
